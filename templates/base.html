@@ -1,0 +1,39 @@
+<!doctype html>
+<head>
+	<title>O olho de Thundera  - Project The Eye Snake</title>
+	<!-- JavaScript Bundle with Popper -->
+<script src="static/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<!-- CSS only -->
+	<link href="static/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	
+	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet"> 
+	
+<script src="static/base.js"></script>
+</head>
+<body>
+  <div class="container">
+    {{ pagination.info }}
+    {{ pagination.links}}
+  <table class="table  table-striped">
+  <thead>
+    <tr class="">
+      <th scope="col">#</th>
+      <th scope="col">Data e Hora</th>
+      <th scope="col">Titulo</th>
+      <th scope="col">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for itens in post|sort(attribute='2,3', reverse = True)%}
+    <tr>
+      <th scope="row">{{ loop.index + pagination.skip }}</th>
+      <td><small class="text-muted">{{ itens.2 }} :: {{ itens.3 }}</small></td>
+      <td><h4>{{ itens.0 }} <span class="badge bg-secondary">{{ itens.4 }}</span></h4></td>
+      <td><a href="{{ itens.1 }}" class="btn btn-dark">Leia mais</a></td>
+    </tr>
+  </tbody>
+   {% endfor %}
+</table>   
+    {{ pagination.links }}
+  </div>  
+</body>
