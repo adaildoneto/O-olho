@@ -1,10 +1,9 @@
-import random, string
 from flask import Flask, render_template
 import json
-import pandas as pd
-import subprocess
-from flask import Blueprint
-from flask_paginate import Pagination, get_page_args, get_page_parameter
+from flask import request
+import jsonify as jsonify
+import update
+
 
 
 
@@ -14,84 +13,79 @@ app = Flask(  # Create a flask app
   static_folder='static'  # Name of directory for static files
 )
 
-posty = open('thunder-ordenado.json')
-thunder = json.loads(posty.read())
 
-count = thunder['Titulo']
-p = len(count)
-p = int(p)
-users = list(range(p))
 
-def page_href(self, page):
-    if self.href:
-        page = 1 if page is None else page
-        url = self.href.format(page)
-    else:
-        url = url_for(self.endpoint, page=page, **self.args)
+    #criando api da thundera
 
-    # Need to return a unicode object
-    return url.decode('utf8') if PY2 else url
+def thunder():
+    posty = open('thundera.json')
+    thunder = json.loads(posty.read())
+    return thunder
 
-def get_users(offset=0,per_page=50):
-    return users[offset: offset+per_page]
+def log():
+    posty = open('log.json')
+    logi = json.loads(posty.read())
+      
+    return logi
+
+pdate = []
+log1 = log()
+pdate = log1[-1]
 
 @app.route('/')  # What happens when the user visits the site
 
 def base_page():
-
-  posty = open('thunder-ordenado.json')
-  thunder = json.loads(posty.read())
-
-  titulo = thunder['Titulo']
-  data = thunder['Data']
-  site = thunder['site']
-  Img = thunder['Imagem']
-  link = thunder['Url']
-  hora = thunder['Hora']
-
-  post = []
-
-  for k in titulo:
-    cpost = ((titulo[k], link[k], data[k], hora[k], site[k], Img[k]))
-    post.append(cpost)
-  page = 1
-  per_page = 50
-
-  offset = (page - 1) * per_page
-
   
-  users = titulo
-  total = len(users)
-
-  pagination_users = get_users(offset=offset,per_page=per_page)
-
-
-
-  pagination = Pagination(page=page, total=total,
-                            css_framework='bootstrap4',
-                            search=False, record_name='bookmarks',
-                            per_page=per_page)
-
+  post = thunder()
+  
         
   return render_template(
     'base.html',  # Template file path, starting from the templates folder. 
-    post=post,
-    users=pagination_users,
-    page=page,
-    per_page=per_page,
-    pagination=pagination,
-    
+     post=post,
+     total = len(post),
+     materia = pdate['materias'],
+     hora = pdate['update']
   )
 
 
 @app.route('/starting')
-def run_script():
-  with open('update.py', mode='r', encoding='utf-8') as update:
-    code = update.read()
+def dynamic_page():
+    result = update.atualiza()
 
-  return exec(code)
+    return render_template(
+    'base3.html',  # Template file path, starting from the templates folder. 
+     post=thunder(),
+     result = result
+     
+  )
+
+@app.route('/json')
+def test_json():
+    list = thunder()
+    
+    return list 
 
 
+@app.route('/search', methods=['GET'])
+def search():
+    
+    name = request.args.get('name')
+    
+    post = thunder()
+
+    result = []
+
+
+    # result = db_users
+    for k in post:
+      if name in str(k['descricao']):
+          cpost = ({'titulo':k['titulo'],'link': k['link'],'data' : k['data'], 'hora' : k['hora'], 'site' : k['site'],'imagem' : k['imagem'], 'descricao': k['descricao']})
+          result.append(cpost)
+    
+
+    return render_template( 'base.html', post = result, total = len(result), materia = pdate['materias'], hora = pdate['update'] )    
+
+ 
 if __name__ == "__main__":  # Makes sure this is the main process
   app.run(  # Starts the site
     host='0.0.0.0',  # EStablishes the host, required for repl to detect the site

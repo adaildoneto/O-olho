@@ -1,15 +1,38 @@
-.pagination-page-info {
-    padding: .6em;
-    padding-left: 0;
-    width: 40em;
-    margin: .5em;
-    margin-left: 0;
-    font-size: 12px;
+.pagination_numbers {
+  text-align: center;
+  margin: 7.5px 0;
 }
-.pagination-page-info b {
-    color: black;
-    background: #6aa6ed;
-    padding-left: 2px;
-    padding: .1em .25em;
-    font-size: 150%;
+.pagination_numbers .pagination_button, .pagination_numbers .prev, .pagination_numbers .next {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  line-height: 1;
+  text-decoration: none;
+  color: red;
+  font-weight: 500;
+  font-size: 14px;
+  border: 0.5px solid rgba(36, 36, 36, .15);
+  padding: 10px 14px;
+  cursor: pointer;
+  -webkit-transition: background 0.1s, color 0.1s;
+  transition: background 0.1s, color 0.1s;
+}
+.pagination_numbers .pagination_button.active, .pagination_numbers .prev.active, .pagination_numbers .next.active {
+  background: red;
+  color: white;
+  border: 0.5px solid transparent;
+}
+.pagination_numbers .pagination_button.active a, .pagination_numbers .prev.active a, .pagination_numbers .next.active a {
+  color: white;
+}
+.pagination_numbers .pagination_button.passive, .pagination_numbers .prev.passive, .pagination_numbers .next.passive {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.pagination_numbers .pagination_button a, .pagination_numbers .prev a, .pagination_numbers .next a {
+  text-decoration: none;
+  color: red;
 }

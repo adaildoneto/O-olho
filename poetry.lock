@@ -231,6 +231,14 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
+name = "jsonify"
+version = "0.5"
+description = "A csv to json converter"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "markupsafe"
 version = "2.1.1"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -585,7 +593,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "42fb69874f2f22abb293078d9003ae66ad81c26e0546e3706949f2a64d78d691"
+content-hash = "4f52d2d8e3e1108406b1a59ac2bad8dfaac5be171101f8270820dbe3fe996d4d"
 
 [metadata.files]
 aiohttp = []
@@ -608,6 +616,7 @@ importlib-metadata = []
 itsdangerous = []
 jedi = []
 jinja2 = []
+jsonify = []
 markupsafe = []
 multidict = []
 numpy = []

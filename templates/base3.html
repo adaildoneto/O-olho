@@ -1,0 +1,127 @@
+<!doctype html>
+<head>
+	<title>O olho de Thundera  - Project The Eye Snake</title>
+	<!-- JavaScript Bundle with Popper -->
+
+	<!-- CSS only -->
+	<link href="static/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	
+	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet"> 
+  <script text="Javascript" src="static/base.js"></script>
+  <script src="static/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<script src="static/base.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+ <link href="static/base.css" rel="stylesheet"> 
+</head>
+
+<body>
+
+  <header>
+    <div class="px-3 py-2 bg-dark text-white">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+            <img src="/static/eyesnake-w.svg" width="auto" height="60" class="center d-inline-block align-top white" alt="">
+            <b>EyeSnake Project</b> - Alfa-release Thundera
+          </a>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              <a href="#" class="nav-link text-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"></use></svg>
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"></use></svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"></use></svg>
+                Orders
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"></use></svg>
+                Products
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></use></svg>
+                Customers
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="px-3 py-2 border-bottom mb-3">
+      <div class="container d-flex flex-wrap justify-content-center">
+        
+        <form action="/search" method="get" class="col.8 d-flex">
+          <input class="form-control me-2" name="name" type="search" placeholder="Faça sua busca..." aria-label="Search">
+          <button class="btn btn-outline-danger" type="submit">Busca</button>
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-light text-dark me-2">Login</button>
+          <button type="button" class="btn btn-primary">Sign-up</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+   
+    
+        
+          <div class="container" id="main">
+              <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h2 class="display-4">Até o momento foram atualizadas <b>{{ result }}</b> matérias</h2>
+          <p class="lead">Atualização recente </p>
+        </div>
+      </div>
+      
+  
+  
+     <div class="row schedule-row-loop-div">
+      
+      
+       {% for itens in (post|sort(attribute='data,hora', reverse = True)) %}
+            
+       <div class="col-sm-12 col-md-6 col-lg-4 schedule-row-loop" style="margin-bottom: 15px;">
+        <div class="card">
+          <div class="card-body center">
+            <h5 class="card-title">{{ itens.titulo }}</h5>
+            <p class="card-text"></p>
+            <a href="{{ itens.link }}" class="btn btn-primary">Leia no site {{ itens.site }}</a>
+          </div>
+          <div class="card-footer text-muted center">
+            <span class="badge bg-warning rounded-pill">{{ itens.data}}</span> <span class="badge bg-success rounded-pill">{{ itens.hora}}</span>  
+           </div>
+        </div>
+      </div> 
+            
+       {% endfor %}
+      
+    </div>
+     
+     <script src="static/base.js"></script>
+          
+      
+   
+    
+  </div>
+  
+          </div>
+      </div>
+  
+   
+
+</body>
