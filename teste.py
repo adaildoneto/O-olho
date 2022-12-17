@@ -2,7 +2,7 @@ import json
 
 
 def thundera():
-    posty = open('thunder-ordenado.json')
+    posty = open('thundera.json')
     thunder = json.loads(posty.read())
 
     titulo = thunder['Titulo']
@@ -11,12 +11,12 @@ def thundera():
     Img = thunder['Imagem']
     link = thunder['Url']
     hora = thunder['Hora']
-    descricao = thunder['Descricao']
+    
 
     postson = []
 
     for k in titulo:
-        cpost = ({'titulo':titulo[k],'link': link[k],'data' : data[k], 'hora' : hora[k], 'site' : site[k],'imagem' : Img[k], 'descricao': descricao[k]})
+        cpost = ({'titulo':titulo[k],'link': link[k],'data' : data[k], 'hora' : hora[k], 'site' : site[k],'imagem' : Img[k]})
         postson.append(cpost)
         
     return postson

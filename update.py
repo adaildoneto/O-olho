@@ -8,17 +8,22 @@ def atualiza():
    
 
    def log():
-      posty = open('log.json')
-      logi = json.loads(posty.read())
+      postl = open('log.json')
+      logi = json.loads(postl.read())
       
       return logi
-
    
-   def thundera():
-      posty = open('thundera.json')
-      thunder = json.loads(posty.read())
+   def thunder():
+      postr = open('thunder.json')
+      thunder = json.loads(postr.read())
       
       return thunder 
+   
+   def thundera():
+      postt = open('thundera.json')
+      thundera = json.loads(postt.read())
+      
+      return thundera 
 
    post = thundera()   
 
@@ -29,6 +34,8 @@ def atualiza():
       lista.append(obj)
 
    novo = post
+
+   thunder = thunder() 
 
    total = []
 
@@ -71,12 +78,13 @@ def atualiza():
 
             #estruturando o conteudo dentro da celula
             cpost = ({'titulo':titulo,'link': link,'data' : cdata1, 'hora' : chora, 'site' : side,'imagem' : img, 'descricao': descricao})
-
+            cpost2 = ({'titulo':titulo,'link': link,'data' : cdata1, 'hora' : chora, 'site' : side,'imagem' : img})
                   
             
             if (link not in lista):
                novo.append (cpost)
                total.append (cpost)
+               thunder.append (cpost2) 
             
       else:
          print('site ' + turl + ' não habilitado para o json')
@@ -84,6 +92,12 @@ def atualiza():
    filename = 'thundera.json'
    with open(filename, 'w') as json_file:
       json.dump(novo, json_file, 
+                           indent=4,  
+                           separators=(',',': '))
+
+   filenamet = 'thunder.json'
+   with open(filenamet, 'w') as json_file:
+      json.dump(thunder, json_file, 
                            indent=4,  
                            separators=(',',': '))
 
