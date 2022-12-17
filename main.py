@@ -1,7 +1,8 @@
 from flask import Flask, render_template
-import json
 from flask import request
 import update
+import thundera
+import search
 
 app = Flask(  # Create a flask app
   __name__,
@@ -9,38 +10,10 @@ app = Flask(  # Create a flask app
   static_folder='static'  # Name of directory for static files
 )
 
-#criando api da thundera
-
-
-def thunder():
-  postt = open('thunder.json')
-  thunder = json.loads(postt.read())
-
-  return thunder
-
-
-def thundera():
-  postt = open('thundera.json')
-  thundera = json.loads(postt.read())
-
-  return thundera
-
-
-def log():
-  postl = open('log.json')
-  logi = json.loads(postl.read())
-
-  return logi
-
-
-pdate = []
-log1 = log()
-pdate = log1[-1]
-
-
 @app.route('/')  # What happens when the user visits the site
 def base_page():
-  post = thunder()
+  post = thundera.thunder()
+  pdate = thundera.pdate()
 
   return render_template(
     'base.html',  # Template file path, starting from the templates folder. 
@@ -53,7 +26,7 @@ def base_page():
 @app.route('/starting')
 def dynamic_page():
   result = update.atualiza()
-  post = thunder()
+  post = thundera.thunder()
   return render_template(
     'base3.html',  # Template file path, starting from the templates folder. 
     post=post,
@@ -62,14 +35,14 @@ def dynamic_page():
 
 @app.route('/log')
 def log_json():
-  list = log()
+  list = thundera.log()
 
   return list
 
 
 @app.route('/json')
 def test_json():
-  list = thunder()
+  list = thundera.thunder()
 
   return list
 
@@ -79,36 +52,44 @@ def busca():
 
   return render_template('busca.html')
 
+@app.route('/abusca')
+def buscaad():
+
+  return render_template('abusca.html')
+
 
 @app.route('/search', methods=['GET'])
-def search():
-
+def pesquisa():
+  
   name = request.args.get('name')
-
-  post = thundera()
-
-  result = []
-
-  # result = db_users
-  for k in post:
-    if name in str(k['descricao']):
-      cpost = ({
-        'titulo': k['titulo'],
-        'link': k['link'],
-        'data': k['data'],
-        'hora': k['hora'],
-        'site': k['site'],
-        'imagem': k['imagem'],
-        'descricao': k['descricao']
-      })
-      result.append(cpost)
+  
+  result = search.busca(name=name)
+  
+  pdate = thundera.pdate()
 
   return render_template('base.html',
                          post=result,
                          total=len(result),
                          materia=pdate['materias'],
-                         hora=pdate['update'])
+                         hora=pdate['update']
+                         )
 
+
+@app.route('/asearch', methods=['GET'])
+def apesquisa():
+  
+  name = request.args.get('name')
+  
+  result = search.abusca(aname=name)
+  
+  pdate = thundera.pdate()
+
+  return render_template('base.html',
+                         post=result,
+                         total=len(result),
+                         materia=pdate['materias'],
+                         hora=pdate['update']
+                         )
 
 if __name__ == "__main__":  # Makes sure this is the main process
   app.run(  # Starts the site

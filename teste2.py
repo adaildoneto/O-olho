@@ -1,17 +1,5 @@
-import json
+import search
 
-def thundera():
-    posty = open('thundera.json')
-    thunder = json.loads(posty.read())
-    
-    return thunder 
+result = search.abusca(aname="Bocalom")
 
-post = thundera()   
-
-lista = []
-
-for i in post:
-    obj = i['link']
-    lista.append(obj)
-
-print (lista)
+print (result)
