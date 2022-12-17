@@ -57,27 +57,28 @@ def abusca(aname):
         response = requests.get(pturl)
         datas = response.text
         k = json.loads(datas)
-      try:
-        cdata = k['date']
-        cdata1 = cdata[0:10]
-        chora = cdata[11:20]
-      except KeyError:
-        cdata = 0
+       
+        try:
+          cdata = k['date']
+          cdata1 = cdata[0:10]
+          chora = cdata[11:20]
+        except KeyError:
+          cdata = 0
 
-      try:
-        img = k['jetpack_featured_media_url']
-      except KeyError:
-        turl = (sites[i] + '/wp-json/wp/v2/media/' + id_)
-        response = requests.get(turl)
-        if response.status_code == 200:
-          imagem = response.text
-          i_json = json.loads(imagem)
-          img = i_json['yoast_head_json']['og_image']['url']
-        else:
-          img = 'Não encontrado'
+        try:
+          img = k['jetpack_featured_media_url']
+        except KeyError:
+          turl = (sites[i] + '/wp-json/wp/v2/media/' + id_)
+          response = requests.get(turl)
+          if response.status_code == 200:
+            imagem = response.text
+            i_json = json.loads(imagem)
+            img = i_json['yoast_head_json']['og_image']['url']
+          else:
+            img = 'Não encontrado'
 
-          #estruturando o conteudo dentro da celula
-          pdata = ({
+        #estruturando o conteudo dentro da celula
+        pdata = ({
             'titulo': titulo,
             'link': link,
             'data': cdata1,
@@ -88,7 +89,7 @@ def abusca(aname):
 
         # ativando a planilha workbook
         resultado.append(pdata)
-      else:
-        print('site ' + turl + ' não habilitado para o json')
+    else:
+       print('site ' + turl + ' não habilitado para o json')
 
   return resultado
