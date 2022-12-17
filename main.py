@@ -3,12 +3,14 @@ from flask import request
 import update
 import thundera
 import search
+import buscar
 
 app = Flask(  # Create a flask app
   __name__,
   template_folder='templates',  # Name of html file folder
   static_folder='static'  # Name of directory for static files
 )
+
 
 @app.route('/')  # What happens when the user visits the site
 def base_page():
@@ -52,6 +54,7 @@ def busca():
 
   return render_template('busca.html')
 
+
 @app.route('/abusca')
 def buscaad():
 
@@ -60,36 +63,35 @@ def buscaad():
 
 @app.route('/search', methods=['GET'])
 def pesquisa():
-  
+
   name = request.args.get('name')
-  
+
   result = search.busca(name=name)
-  
+
   pdate = thundera.pdate()
 
   return render_template('base.html',
                          post=result,
                          total=len(result),
                          materia=pdate['materias'],
-                         hora=pdate['update']
-                         )
+                         hora=pdate['update'])
 
 
 @app.route('/asearch', methods=['GET'])
 def apesquisa():
-  
+
   name = request.args.get('name')
-  
-  result = search.abusca(aname=name)
-  
+
+  result = buscar.abusca(aname=name)
+
   pdate = thundera.pdate()
 
   return render_template('base.html',
                          post=result,
                          total=len(result),
                          materia=pdate['materias'],
-                         hora=pdate['update']
-                         )
+                         hora=pdate['update'])
+
 
 if __name__ == "__main__":  # Makes sure this is the main process
   app.run(  # Starts the site
