@@ -4,6 +4,7 @@ import update
 import thundera
 import search
 import buscar
+import contador
 
 app = Flask(  # Create a flask app
   __name__,
@@ -59,6 +60,28 @@ def busca():
 def buscaad():
 
   return render_template('abusca.html')
+
+@app.route('/dashboard')
+def dashboard():
+    post = thundera.thunder()
+    pdate = thundera.pdate()
+
+    graph = contador.countsite()
+    label = [graph['label'] for graph in graph]
+    valor = [graph['valor'] for graph in graph]
+    
+    data = contador.countdata()
+    datal = [data['label'] for data in data]
+    dvalor = [data['valor'] for data in data]
+
+    return render_template('dashboard.html', 
+                            label=label, 
+                            valor=valor, 
+                            datal=datal, 
+                            dvalor=dvalor,
+                            total=len(post),
+                            materia=pdate['materias'],
+                            hora=pdate['update'])
 
 
 @app.route('/search', methods=['GET'])

@@ -13,6 +13,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
  <link href="static/base.css" rel="stylesheet"> 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.js" integrity="sha512-64PuQoA1/rGxeXwhWJRNZl25TjBPhQWeQ6x8h6UC54gQT7xFvTio//dLKg2MiAc3/4Tf+uoLKPzl+QuX87fssA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
 </head>
 
 <body>
@@ -34,7 +36,7 @@
               </a>
             </li>
             <li>
-              <a href="/dashboar" class="nav-link text-white">
+              <a href="/dashboard" class="nav-link text-white">
                 <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"></use></svg>
                 Dashboard
               </a>
@@ -83,43 +85,73 @@
           <div class="container" id="main">
               <div class="jumbotron jumbotron-fluid">
         <div class="container">
-          
-          <h2 class="display-4">Até o momento foram atualizadas <b>{{ result }}</b> matérias</h2>
+          <h2 class="display-4">Até o momento foram carregadas <b>{{ total }}</b> matérias</h2>
+          <p class="lead">23 sites com base no Acre estão sendo monitorados</p>
+          <hr>
+          <p class="lead">Atualização recente entrou {{ materia }} matérias às {{ hora }}</p>
         </div>
+      </div>  
+  
+  
+     <div class="row">
+      <div>
+        <h2>Quantidade de matérias produzidas por dia</h2>
+        <canvas id="myChart2"></canvas>
+        <hr>
+        <h2>Quantidade de matérias produzidas por veículo</h2>
+        <canvas id="myChart"></canvas>
+
       </div>
       
-  
-  
-     <div class="row schedule-row-loop-div">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      <script>
+        const ctx = document.getElementById('myChart');
       
-      
-       {% for itens in (post|sort(attribute='data,hora', reverse = True)) %}
-            
-       <div class="col-sm-12 col-md-6 col-lg-4 schedule-row-loop" style="margin-bottom: 15px;">
-        <div class="card">
-          <div class="card-body center">
-            <h5 class="card-title">{{ itens.titulo }}</h5>
-            <p class="card-text"></p>
-            <a href="{{ itens.link }}" class="btn btn-primary">Leia no site {{ itens.site }}</a>
-          </div>
-          <div class="card-footer text-muted center">
-            <span class="badge bg-warning rounded-pill">{{ itens.data}}</span> <span class="badge bg-success rounded-pill">{{ itens.hora}}</span>  
-           </div>
-        </div>
-      </div> 
-            
-       {% endfor %}
-      
-    </div>
-     
-     <script src="static/base.js"></script>
-          
-      
-   
-    
-  </div>
-  
-          </div>
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: {{ label | safe}},
+            datasets: [{
+              label: '# Matérias',
+              data: {{ valor | safe}},
+              borderWidth: 1
+            }]
+          },
+          options: {
+            indexAxis: 'x',
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+
+<script>
+  const ctx2 = document.getElementById('myChart2');
+
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: {{ datal | safe}},
+      datasets: [{
+        label: '# Matérias',
+        data: {{ dvalor | safe}},
+        borderWidth: 1
+      }]
+    },
+    options: {
+      indexAxis: 'x',
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
       </div>
   
    
