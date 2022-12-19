@@ -12,8 +12,9 @@
 	<script src="static/base.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
- <link href="static/base.css" rel="stylesheet"> 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.js" integrity="sha512-64PuQoA1/rGxeXwhWJRNZl25TjBPhQWeQ6x8h6UC54gQT7xFvTio//dLKg2MiAc3/4Tf+uoLKPzl+QuX87fssA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="static/base.css" rel="stylesheet"> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.js" integrity="sha512-64PuQoA1/rGxeXwhWJRNZl25TjBPhQWeQ6x8h6UC54gQT7xFvTio//dLKg2MiAc3/4Tf+uoLKPzl+QuX87fssA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js" type="text/javascript"></script>
  
 </head>
 
@@ -95,6 +96,9 @@
   
      <div class="row">
       <div>
+        <h2>Palavras-chaves dos títulos das matérias</h2>
+        <div id="nuvem" class="col-12" style="height: 600px;"></div>
+        <hr>
         <h2>Quantidade de matérias produzidas por dia</h2>
         <canvas id="myChart2"></canvas>
         <hr>
@@ -102,7 +106,7 @@
         <canvas id="myChart"></canvas>
 
       </div>
-      
+      <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-tag-cloud.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
       <script>
@@ -152,6 +156,37 @@
     }
   });
 </script>
+
+<script>
+var data = {{ wordcloud | safe }};
+
+// create a chart and set the data
+chart = anychart.tagCloud(data);
+
+// create and configure a color scale.
+var customColorScale = anychart.scales.linearColor();
+customColorScale.colors(["#ffcc00", "#00ccff"]);
+
+// set the color scale as the color scale of the chart
+chart.colorScale(customColorScale);
+
+// add and configure a color range
+chart.colorRange().enabled(true);
+chart.colorRange().length("90%");
+
+// set the mode of the tag cloud
+chart.mode("spiral");
+
+// set the container id
+chart.container("nuvem");
+
+// initiate drawing the chart
+chart.draw();
+
+</script>
+
+
+
       </div>
   
    

@@ -66,6 +66,8 @@ def dashboard():
     post = thundera.thunder()
     pdate = thundera.pdate()
 
+    wordcloud = contador.contarpalavra()
+
     graph = contador.countsite()
     label = [graph['label'] for graph in graph]
     valor = [graph['valor'] for graph in graph]
@@ -80,6 +82,7 @@ def dashboard():
                             datal=datal, 
                             dvalor=dvalor,
                             total=len(post),
+                            wordcloud=wordcloud,
                             materia=pdate['materias'],
                             hora=pdate['update'])
 
