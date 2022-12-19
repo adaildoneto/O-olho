@@ -2,30 +2,13 @@ from datetime import datetime
 import json
 import requests
 import pytz
+import thundera
+
 
 def atualiza():
 
-   
-
-   def log():
-      postl = open('log.json')
-      logi = json.loads(postl.read())
-      
-      return logi
-   
-   def thunder():
-      postr = open('thunder.json')
-      thunder = json.loads(postr.read())
-      
-      return thunder 
-   
-   def thundera():
-      postt = open('thundera.json')
-      thundera = json.loads(postt.read())
-      
-      return thundera 
-
-   post = thundera()   
+  
+   post = thundera.thundera()   
 
    lista = []
 
@@ -35,7 +18,7 @@ def atualiza():
 
    novo = post
 
-   thunder = thunder() 
+   thunder = thundera.thunder() 
 
    total = []
 
@@ -102,7 +85,7 @@ def atualiza():
                            separators=(',',': '))
 
    resulta = []
-   log1 = log()
+   log1 = thundera.log()
    result = len(total)
    
    chora = datetime.now(pytz.timezone('America/Rio_Branco'))
