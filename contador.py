@@ -35,7 +35,7 @@ def countdata():
 
 def contarpalavra():
     post = thundera.thunder()
-    nsite = [post['titulo'] for post in post ]
+    nsite = [post['titulo'].lower() for post in post ]
     res = " ".join(str(s) for s in nsite)
     res = re.findall(r"[\w']+", res)
     tres = N.unique(res)
